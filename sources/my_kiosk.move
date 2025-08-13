@@ -87,6 +87,12 @@ public fun list_with_purchase_cap(
     transfer::public_transfer(purchase_cap, allowed_buyer);
 }
 
+#[allow(lint(self_transfer))]
+public fun withdraw_kiosk_profits(kiosk: &mut Kiosk, cap: &KioskOwnerCap, amount: Option<u64>,ctx: &mut TxContext){
+    let profits = kiosk::withdraw(kiosk, cap, amount, ctx);
+    transfer::public_transfer(profits, ctx.sender());
+
+}
 // ===Purchase Functions ===
 
 #[allow(lint(self_transfer))]
